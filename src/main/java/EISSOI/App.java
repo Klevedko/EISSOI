@@ -51,6 +51,7 @@ public class App {
                     if (file.getName().toString().substring(0, 3).equals("EMF")) {
                         reader = new EMF_2_reader(filename);
                         reader.startread(con);
+                        ;
                     }
                     if (file.getName().toString().substring(0, 3).equals("ПВГ")) {
                         reader = new PVG_5_reader(filename);
