@@ -1,7 +1,5 @@
 package EISSOI;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -16,7 +14,6 @@ public class CHZL1_4_reader extends Reader {
     public CHZL1_4_reader(String fileName) {
         super(fileName);
     }
-    private static final Logger logr = LogManager.getLogger(CHZL1_4_reader.class.getName());
     public void startread(Connection con) {
         try {
             InputStream excelFile = new BufferedInputStream(new FileInputStream(new File(filename)));

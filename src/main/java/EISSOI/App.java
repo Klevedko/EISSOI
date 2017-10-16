@@ -12,19 +12,24 @@ import java.util.List;
 public class App {
 
     public static FileWriter writer;
-
-    //public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
-    // public static String user = "Apatronov";
-    //public static String password = "N0vusadm3";
-    public static Connection con = null;
+    // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
     public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
 
+    // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида
+    /*
+        public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
+        public static String user = "Apatronov";
+        public static String password = "N0vusadm3";
+    */
+    public static Connection con = null;
     public static void main(String[] args) {
         try {
             writer = new FileWriter("C:/1/java3.txt", false);
-
-            //con = DriverManager.getConnection(url, user, password);
+            // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида
             con = DriverManager.getConnection(url);
+
+            // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
+            //con = DriverManager.getConnection(url, user, password);
 
             File dir = new File("D:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
@@ -43,7 +48,11 @@ public class App {
                 File file = new File(lst.get(i).toString());
 
                 final long lastModified = file.lastModified();
+
+                // Если пытаемся загрузить файлики за ИНТЕРВАЛ
                 //if (new Date(lastModified).after(dateBefore7Days)) {
+
+                // Если пытаемся загрузить файлики за текущий день
                 if (sdf.format(new Date(lastModified)).equals(sdf.format(d))) {
                     final String filename = file.getAbsolutePath();
                     Reader reader = null;
@@ -51,7 +60,6 @@ public class App {
                     if (file.getName().toString().substring(0, 3).equals("EMF")) {
                         reader = new EMF_2_reader(filename);
                         reader.startread(con);
-                        ;
                     }
                     if (file.getName().toString().substring(0, 3).equals("ПВГ")) {
                         reader = new PVG_5_reader(filename);
@@ -84,7 +92,6 @@ public class App {
                         reader = new UEK_7_reader(filename);
                         reader.startread(con);
                     }
-
                 }
             }
             con.close();
