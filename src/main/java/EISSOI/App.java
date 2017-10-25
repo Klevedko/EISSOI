@@ -16,7 +16,7 @@ public class App {
     public static FileWriter writer;
     // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида
     public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
-    public int x;
+    public int x;public int xx;
     // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
 /*
         public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
