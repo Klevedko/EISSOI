@@ -8,8 +8,8 @@ import java.sql.Connection;
 import java.util.Iterator;
 import static EISSOI.App.*;
 public class CHZL7_1_reader extends Reader{
-    public CHZL7_1_reader(String fileName) {
-        super(fileName);
+    public CHZL7_1_reader(String fileName,String target) {
+        super(fileName,target);
     }
     public void startread(Connection con) {
         try {
@@ -119,7 +119,7 @@ public class CHZL7_1_reader extends Reader{
                         "      ,[БАЙКОНУР]\n" +
                         "      ,[г.Байконур - 55000]\n" +
                         "      ,[Title]\n" +
-                        "      ,[file__name] ) select " + rowInsert;
+                        "      ,[file__name], [file_date] ) select " + rowInsert;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 while (cellIterator.hasNext()) {
@@ -143,7 +143,7 @@ public class CHZL7_1_reader extends Reader{
                         }
                     }
                 }
-                sql=sql+Title+"," + "''" +filename + "''')";
+                sql=sql+Title+"," + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportEmploymentMonitoringPod_history_java", "erz_exp.dbo.ReportEmploymentMonitoringPod_history_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
                 sqlConn conn = new sqlConn();

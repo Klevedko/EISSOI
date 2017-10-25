@@ -12,8 +12,8 @@ import static EISSOI.App.*;
 
 public class EMF_2_reader extends Reader {
 
-    public EMF_2_reader(String fileName) {
-        super(fileName);
+    public EMF_2_reader(String fileName, String target) {
+        super(fileName, target);
     }
 
     public void startread(Connection con) {
@@ -65,7 +65,7 @@ public class EMF_2_reader extends Reader {
                         "      ,[dday4]\n" +
                         "      ,[dday5]\n" +
                         "      ,[dday6]\n" +
-                        "      ,[file__name] ) select " + rowInsert;
+                        "      ,[file__name], [file_date] ) select " + rowInsert;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 while (cellIterator.hasNext()) {
@@ -104,15 +104,15 @@ public class EMF_2_reader extends Reader {
 
                 }
                 sql = sql + Title + "," + form8 + "," + sZ_ERZ + "," + Index_dead_in_period + ","
-                        + Index_dead_in_period_ROSSTAT + "," + Index_quartal + "," + Index_Working + ",''" + filename + "''')";
+                        + Index_dead_in_period_ROSSTAT + "," + Index_quartal + "," + Index_Working + ",''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_EMF_history_java", "erz_exp.dbo.ReportAnalize_EMF_history_java");
-                sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
+                sqlEISSOI = sqlEISSOI + " at [MOS-EISSOI-03]";
                 System.out.println(sql);
                 // запись всей строки
 
                 sqlConn conn = new sqlConn();
-                conn.connecting(con,filename,sql);
-                conn.connecting(con,filename,sqlEISSOI);
+                conn.connecting(con, filename, sql);
+                conn.connecting(con, filename, sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

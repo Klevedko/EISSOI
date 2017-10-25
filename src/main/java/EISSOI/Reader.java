@@ -11,7 +11,7 @@ public abstract class Reader {
     public String Title = "";
     public String date1 = "";
     public String date2 = "";
-    public DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     public LocalDateTime now = LocalDateTime.now();
     public String rowInsert = "''" + dtf.format(now) + "'', ";
     public String form8 = "";
@@ -20,12 +20,14 @@ public abstract class Reader {
     public String Index_dead_in_period_ROSSTAT = "";
     public String Index_quartal = "";
     public String Index_Working = "";
+    //public String sss = "";
     public final String filename;
+    public final String target;
     public static String  sqlEISSOI="";
-    public Statement st = null;
-
-    Reader(String filename){
+    //public Statement st = null;
+    Reader(String filename, String target){
         this.filename=filename;
+        this.target=target;
     }
     public abstract void startread(Connection con);
 }

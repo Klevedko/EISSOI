@@ -11,8 +11,8 @@ import java.util.Iterator;
 import static EISSOI.App.*;
 
 public class PMO_3_reader extends Reader{
-    public PMO_3_reader (String fileName) {
-        super(fileName);
+    public PMO_3_reader (String fileName,String target) {
+        super(fileName,target);
     }
     public void startread(Connection con) {
         try {
@@ -39,7 +39,7 @@ public class PMO_3_reader extends Reader{
                         "      ,[Title]\n" +
                         "      ,[date1]\n" +
                         "      ,[date2]\n" +
-                        "      ,[file__name] ) select "  + rowInsert;
+                        "      ,[file__name], [file_date] ) select "  + rowInsert;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 while (cellIterator.hasNext()) {
@@ -70,7 +70,7 @@ public class PMO_3_reader extends Reader{
                         }
                     }
                 }
-                sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "''')";
+                sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
                 sqlConn conn = new sqlConn();

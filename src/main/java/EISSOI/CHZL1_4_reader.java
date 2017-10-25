@@ -11,8 +11,8 @@ import java.util.Iterator;
 import static EISSOI.App.*;
 
 public class CHZL1_4_reader extends Reader {
-    public CHZL1_4_reader(String fileName) {
-        super(fileName);
+    public CHZL1_4_reader(String fileName,String target) {
+        super(fileName,target);
     }
     public void startread(Connection con) {
         try {
@@ -33,7 +33,7 @@ public class CHZL1_4_reader extends Reader {
                         "      ,[Title]\n" +
                         "      ,[date1]\n" +
                         "      ,[date2]\n" +
-                        "      ,[file__name]) select " + rowInsert;
+                        "      ,[file__name], [file_date]) select " + rowInsert;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 while (cellIterator.hasNext()) {
@@ -62,7 +62,7 @@ public class CHZL1_4_reader extends Reader {
                             }
                     }
                 }
-                sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "''')";
+                sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_ChZL_dead_history_java", "erz_exp.dbo.ReportAnalize_ChZL_dead_history_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
                 sqlConn conn = new sqlConn();
