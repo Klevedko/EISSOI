@@ -24,7 +24,7 @@ public class EMF_2_reader extends Reader {
             Iterator<Row> iterator = datatypeSheet.iterator();
             writer.append("---------" + filename + "----------");
             while (iterator.hasNext()) {
-                sql = "exec ('insert into ReportAnalize_EMF_history_java ( [date_insert]\n" +
+                sql = "exec22 ('insert into ReportAnalize_EMF_history_java ( [date_insert]\n" +
                         "      ,[RF]\n" +
                         "      ,[code]\n" +
                         "      ,[in_ERZ_current_date]\n" +
