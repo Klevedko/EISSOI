@@ -34,25 +34,31 @@ public class App {
             // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
             System.out.println("try to connect");
             con = DriverManager.getConnection(url);
+            System.out.println("after connect");
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
             //con = DriverManager.getConnection(url, user, password);
-
-            File dir = new File("F:/Reports_Outgoing/");
+            System.out.println("go00");
+            File dir = new File("D:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
+            System.out.println("go0");
             List<File> lst = Arrays.asList(arrFiles);
+            System.out.println(lst.size());
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
+            System.out.println("go");
             // если пытаемся загрузить историю за X дней. готовим переменную dateBefore7Days
             Date d = new Date();
             Calendar cal = Calendar.getInstance();
+            System.out.println("go2");
             cal.setTime(d);
+            System.out.println("go3");
             writer.append(cal.getTime().toString());
+            System.out.println("go4");
             cal.add(Calendar.DATE, -10);
             Date dateBefore7Days = cal.getTime();
 
             for (int i = 0; i < lst.size(); i++) {
                 File file = new File(lst.get(i).toString());
-
+                System.out.println("file");
                 final long lastModified = file.lastModified();
                 //System.out.println(file.getName() + ",  " + file.lastModified());
                 // Если пытаемся загрузить файлики за ИНТЕРВАЛ
