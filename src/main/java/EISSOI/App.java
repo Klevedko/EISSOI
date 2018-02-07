@@ -24,7 +24,7 @@ public class App {
 /*
         public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
         public static String user = "Apatronov";
-        public static String password = "N0vusadm6";
+        public static String password = "";
 */
 
     public static void main(String[] args) {
