@@ -18,7 +18,7 @@ public class App {
     public static FileWriter writer;
     public static Connection con = null;
 
-    // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида
+    // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида И УБИРАЕМ ЗАВИСИМОСТЬ sourceforge
      public static String url = "jdbc:sqlserver://10.2515.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
     // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
 /*
@@ -32,6 +32,7 @@ public class App {
             writer = new FileWriter("C:/1/java3.txt", false);
 
             // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
+            System.out.println("try to connect");
             con = DriverManager.getConnection(url);
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
             //con = DriverManager.getConnection(url, user, password);
