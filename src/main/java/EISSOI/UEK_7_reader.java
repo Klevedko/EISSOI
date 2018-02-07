@@ -22,6 +22,16 @@ public class UEK_7_reader extends Reader {
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
             writer.append("---------" + filename + "----------");
+
+            // Удаление из ReportData
+            deleteSql="exec ( 'delete from ReportAnalize_UEK_History_java where file_date = ''" + target + "''')";
+            App.connecting(con, filename, deleteSql);
+
+            // Удаление из EISSOI
+            deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_UEK_History_java", "erz_exp.dbo.ReportAnalize_UEK_History_java");
+            deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
+            App.connecting(con, filename, deleteSqlEissoi);
+
             while (iterator.hasNext()) {
                 sql = "exec(' insert into ReportAnalize_UEK_History_java ([date_insert]\n" +
                         "      ,[RF_part]\n" +

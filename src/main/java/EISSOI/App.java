@@ -16,25 +16,25 @@ import java.util.List;
 public class App {
 
     public static FileWriter writer;
+    public static Connection con = null;
+
     // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида
-    // public static String url = "jdbc:sqlserver://10.2515.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
-
+     public static String url = "jdbc:sqlserver://10.2515.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
     // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
-
+/*
         public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
         public static String user = "Apatronov";
         public static String password = "N0vusadm6";
-
-    public static Connection con = null;
+*/
 
     public static void main(String[] args) {
         try {
             writer = new FileWriter("C:/1/java3.txt", false);
-            // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
-            //con = DriverManager.getConnection(url);
 
+            // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
+            con = DriverManager.getConnection(url);
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
-            con = DriverManager.getConnection(url, user, password);
+            //con = DriverManager.getConnection(url, user, password);
 
             File dir = new File("F:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
@@ -46,7 +46,7 @@ public class App {
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
             writer.append(cal.getTime().toString());
-            cal.add(Calendar.DATE, -11);
+            cal.add(Calendar.DATE, -10);
             Date dateBefore7Days = cal.getTime();
 
             for (int i = 0; i < lst.size(); i++) {
@@ -55,7 +55,7 @@ public class App {
                 final long lastModified = file.lastModified();
                 //System.out.println(file.getName() + ",  " + file.lastModified());
                 // Если пытаемся загрузить файлики за ИНТЕРВАЛ
-                // if (new Date(lastModified).after(dateBefore7Days)) {
+                 //if (new Date(lastModified).after(dateBefore7Days)) {
 
                 // Если пытаемся загрузить файлики за текущий день
                 if (sdf.format(new Date(lastModified)).equals(sdf.format(d))) {
@@ -81,7 +81,7 @@ public class App {
                         reader = new PVG_5_reader(filename, target);
                         reader.startread(con);
                     }
-/*
+
                     if (file.getName().toString().substring(0, 5).equals("ЧЗЛ_1")) {
                         reader = new CHZL1_4_reader(filename, target);
                         reader.startread(con);
@@ -109,7 +109,7 @@ public class App {
                         reader = new UEK_7_reader(filename, target);
                         reader.startread(con);
                     }
-*/
+
                 }
             }
             con.close();

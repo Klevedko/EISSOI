@@ -21,8 +21,7 @@ public abstract class Reader {
     public String Index_dead_in_period = "";
     public String Index_dead_in_period_ROSSTAT = "";
     public String Index_quartal = "";
-    public String Index_Working = "";
-    //public String sss = "";
+    public String Index_Working= "";
     public final String filename;
     public final String target;
     public static String  sqlEISSOI="";

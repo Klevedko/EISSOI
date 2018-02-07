@@ -24,23 +24,17 @@ public class EMF_2_reader extends Reader {
             Iterator<Row> iterator = datatypeSheet.iterator();
             writer.append("---------" + filename + "----------");
 
-            // попытка удалить данные из 2 БД
-            Deleter del = new Deleter();
-            del.deleter(con, "ReportAnalize_EMF_history_java_TESTS" , target, "");
-            del.deleter(con, "erz_exp.ReportAnalize_EMF_history_java_TESTS" , target, " at [MOS-EISSOI-03]");
-/*
-               OLD
-
             // Удаление из ReportData
-            deleteSql="exec ( 'delete from ReportAnalize_EMF_history_java_TESTS where file_date = ? ' )";
+            deleteSql="exec ( 'delete from ReportAnalize_EMF_history_java where file_date = ''" + target + "''')";
             App.connecting(con, filename, deleteSql);
 
             // Удаление из EISSOI
-            deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_EMF_history_java_TESTS", "erz_exp.dbo.ReportAnalize_EMF_history_java_TESTS");
+            deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_EMF_history_java", "erz_exp.dbo.ReportAnalize_EMF_history_java");
+            deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
             App.connecting(con, filename, deleteSqlEissoi);
-*/
+
             while (iterator.hasNext()) {
-                sql = "exec ('insert into ReportAnalize_EMF_history_java_TESTS ( [date_insert]\n" +
+                sql = "exec ('insert into ReportAnalize_EMF_history_java ( [date_insert]\n" +
                         "      ,[RF]\n" +
                         "      ,[code]\n" +
                         "      ,[in_ERZ_current_date]\n" +
@@ -122,7 +116,7 @@ public class EMF_2_reader extends Reader {
 
                 sql = sql + Title + "," + form8 + "," + sZ_ERZ + "," + Index_dead_in_period + ","
                         + Index_dead_in_period_ROSSTAT + "," + Index_quartal + "," + Index_Working + ",''" + filename + "'',''" + target + "''')";
-                sqlEISSOI = sql.replaceAll("ReportAnalize_EMF_history_java_TESTS", "erz_exp.dbo.ReportAnalize_EMF_history_java_TESTS");
+                sqlEISSOI = sql.replaceAll("ReportAnalize_EMF_history_java", "erz_exp.dbo.ReportAnalize_EMF_history_java");
                 sqlEISSOI = sqlEISSOI + " at [MOS-EISSOI-03]";
 
                 System.out.println(sql);
