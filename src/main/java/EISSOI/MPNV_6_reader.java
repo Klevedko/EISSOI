@@ -75,9 +75,9 @@ public class MPNV_6_reader extends Reader {
                 //System.out.println(sql);
                 sqlEISSOI = sql.replaceAll("ReportAnalize_MPNV_History_java", "erz_exp.dbo.ReportAnalize_MPNV_History_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
-                sqlConn conn = new sqlConn();
-                conn.connecting(con,filename,sql);
-                conn.connecting(con,filename,sqlEISSOI);
+
+                App.connecting(con,filename,sql);
+                App.connecting(con,filename,sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

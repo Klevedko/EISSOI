@@ -18,6 +18,7 @@ public class CHZL7_1_reader extends Reader{
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
             writer.append("---------" + filename + "----------");
+
             while (iterator.hasNext()) {
                 sql = "exec(' insert into ReportEmploymentMonitoringPod_history_java ([date_insert]\n" +
                         "      ,[СУБЪЕКТ РФ]\n" +
@@ -146,9 +147,9 @@ public class CHZL7_1_reader extends Reader{
                 sql=sql+Title+"," + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportEmploymentMonitoringPod_history_java", "erz_exp.dbo.ReportEmploymentMonitoringPod_history_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
-                sqlConn conn = new sqlConn();
-                conn.connecting(con,filename,sql);
-                conn.connecting(con,filename,sqlEISSOI);
+
+                App.connecting(con,filename,sql);
+                App.connecting(con,filename,sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

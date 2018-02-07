@@ -63,9 +63,9 @@ public class UEK_7_reader extends Reader {
                 sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_UEK_History_java", "erz_exp.dbo.ReportAnalize_UEK_History_java");
                 sqlEISSOI = sqlEISSOI + " at [MOS-EISSOI-03]";
-                sqlConn conn = new sqlConn();
-                conn.connecting(con, filename, sql);
-                conn.connecting(con, filename, sqlEISSOI);
+
+                App.connecting(con, filename, sql);
+                App.connecting(con, filename, sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

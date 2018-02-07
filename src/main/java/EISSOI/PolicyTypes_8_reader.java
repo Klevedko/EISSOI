@@ -55,9 +55,9 @@ public class PolicyTypes_8_reader extends Reader {
                 sql = sql + Title + ", " + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_PolicyTypes_History_java", "erz_exp.dbo.ReportAnalize_PolicyTypes_History_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
-                sqlConn conn = new sqlConn();
-                conn.connecting(con,filename,sql);
-                conn.connecting(con,filename,sqlEISSOI);
+
+                App.connecting(con,filename,sql);
+                App.connecting(con,filename,sqlEISSOI);
             }
         }  catch (FileNotFoundException e) {
             e.printStackTrace();
