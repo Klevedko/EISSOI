@@ -19,12 +19,12 @@ public class App {
     public static Connection con = null;
 
     // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида И УБИРАЕМ ЗАВИСИМОСТЬ sourceforge
-     public static String url = "jdbc:sqlserver://10.2515.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
+    public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
     // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
 /*
         public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
         public static String user = "Apatronov";
-        public static String password = "";
+        public static String password = "N0vusadm7";
 */
 
     public static void main(String[] args) {
@@ -34,7 +34,9 @@ public class App {
             // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
             con = DriverManager.getConnection(url);
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
-            //con = DriverManager.getConnection(url, user, password);
+
+/*            con = DriverManager.getConnection(url, user, password);*/
+
             File dir = new File("D:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
             List<File> lst = Arrays.asList(arrFiles);
@@ -106,6 +108,11 @@ public class App {
 
                     if (file.getName().toString().substring(0, 3).equals("УЭК")) {
                         reader = new UEK_7_reader(filename, target);
+                        reader.startread(con);
+                    }
+
+                    if (file.getName().toString().substring(0, 3).equals("ОВП")) {
+                        reader = new OVP_reader(filename, target);
                         reader.startread(con);
                     }
 
