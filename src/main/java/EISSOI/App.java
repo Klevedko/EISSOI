@@ -24,7 +24,7 @@ public class App {
 /*
         public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
         public static String user = "Apatronov";
-        public static String password = "N0vusadm7";
+        public static String password = "N0vusadm8";
 */
 
     public static void main(String[] args) {
@@ -34,8 +34,7 @@ public class App {
             // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
             con = DriverManager.getConnection(url);
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
-
-/*            con = DriverManager.getConnection(url, user, password);*/
+            //con = DriverManager.getConnection(url, user, password);
 
             File dir = new File("D:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
@@ -47,19 +46,19 @@ public class App {
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
             writer.append(cal.getTime().toString());
-            cal.add(Calendar.DATE, -10);
+            cal.add(Calendar.DATE, -3);
             Date dateBefore7Days = cal.getTime();
 
             for (int i = 0; i < lst.size(); i++) {
                 File file = new File(lst.get(i).toString());
-                System.out.println("file");
+                //System.out.println("file");
                 final long lastModified = file.lastModified();
                 //System.out.println(file.getName() + ",  " + file.lastModified());
                 // Если пытаемся загрузить файлики за ИНТЕРВАЛ
-                 //if (new Date(lastModified).after(dateBefore7Days)) {
+                 if (new Date(lastModified).after(dateBefore7Days)) {
 
                 // Если пытаемся загрузить файлики за текущий день
-                if (sdf.format(new Date(lastModified)).equals(sdf.format(d))) {
+                //if (sdf.format(new Date(lastModified)).equals(sdf.format(d))) {
 
                     final String filename = file.getAbsolutePath();
                     // извлекаем из имени файла дату

@@ -43,6 +43,7 @@ public class PolicyTypes_8_reader extends Reader {
                         "      ,[vcount_UEK]\n" +
                         "      ,[Parent]\n" +
                         "      ,[file__name], [file_date] ) select " + rowInsert;
+                System.out.println(sql);
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 while (cellIterator.hasNext()) {
