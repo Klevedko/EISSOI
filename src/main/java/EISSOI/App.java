@@ -1,5 +1,9 @@
 package EISSOI;
 
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class App {
+public class App implements Job{
 
     public static FileWriter writer;
     public static Connection con = null;
@@ -27,7 +31,8 @@ public class App {
         public static String password = "N0vusadm8";
 */
 
-    public static void main(String[] args) {
+    public void execute(JobExecutionContext context)
+            throws JobExecutionException {
         try {
             writer = new FileWriter("C:/1/java3.txt", false);
 
@@ -71,7 +76,6 @@ public class App {
                     //System.out.println(source + " => " + target);
 
                     Reader reader = null;
-
                     if (file.getName().toString().substring(0, 3).equals("EMF")) {
                         reader = new EMF_2_reader(filename, target);
                         reader.startread(con);
@@ -88,9 +92,10 @@ public class App {
                     }
 
                     if (file.getName().toString().substring(0, 3).equals("ПМО")) {
-                        reader = new PMO_3_reader(filename, target);
-                        reader.startread(con);
+                        //reader = new PMO_3_reader(filename, target);
+                        //reader.startread(con);
                     }
+
                     if (file.getName().toString().substring(0, 4).equals("ЧЗЛ7")) {
                         reader = new CHZL7_1_reader(filename, target);
                         reader.startread(con);
@@ -114,7 +119,6 @@ public class App {
                         reader = new OVP_reader(filename, target);
                         reader.startread(con);
                     }
-
                 }
             }
             con.close();
