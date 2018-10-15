@@ -119,9 +119,8 @@ public class EMF_2_reader extends Reader {
                 sqlEISSOI = sql.replaceAll("ReportAnalize_EMF_history_java", "erz_exp.dbo.ReportAnalize_EMF_history_java");
                 sqlEISSOI = sqlEISSOI + " at [MOS-EISSOI-03]";
 
-                System.out.println(sql);
+                //System.out.println(sql);
                 // запись всей строки
-
 
                 App.connecting(con, filename, sql);
                 App.connecting(con, filename, sqlEISSOI);

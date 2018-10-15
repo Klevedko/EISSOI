@@ -19,22 +19,21 @@ public class App {
     public static Connection con = null;
 
     // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида И УБИРАЕМ ЗАВИСИМОСТЬ sourceforge
-    public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
+//    public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
     // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
-/*
         public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
         public static String user = "Apatronov";
-        public static String password = "N0vusadm8";
-*/
+        public static String password = "N0vusadm12";
 
     public static void main(String[] args) {
         try {
+            new File("C:/1/").mkdirs();
             writer = new FileWriter("C:/1/java3.txt", false);
 
             // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
-            con = DriverManager.getConnection(url);
+            //con = DriverManager.getConnection(url);
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
-            //con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection(url, user, password);
 
             File dir = new File("D:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
@@ -46,14 +45,13 @@ public class App {
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
             writer.append(cal.getTime().toString());
-            cal.add(Calendar.DATE, -3);
+            cal.add(Calendar.DATE, -140);
             Date dateBefore7Days = cal.getTime();
-
+            final DateTimeFormatter srcFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+            final DateTimeFormatter trgFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
             for (int i = 0; i < lst.size(); i++) {
                 File file = new File(lst.get(i).toString());
-                //System.out.println("file");
                 final long lastModified = file.lastModified();
-                //System.out.println(file.getName() + ",  " + file.lastModified());
                 // Если пытаемся загрузить файлики за ИНТЕРВАЛ
                  if (new Date(lastModified).after(dateBefore7Days)) {
 
@@ -64,11 +62,8 @@ public class App {
                     // извлекаем из имени файла дату
                     StringBuffer file_data = new StringBuffer(filename.substring(filename.length() - 12, filename.length() - 4));
                     String source = file_data.toString();
-                    final DateTimeFormatter srcFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-                    final DateTimeFormatter trgFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                     final LocalDate date = LocalDate.parse(file_data, srcFormatter);
                     final String target = trgFormatter.format(date);
-                    //System.out.println(source + " => " + target);
 
                     Reader reader = null;
 
@@ -114,7 +109,6 @@ public class App {
                         reader = new OVP_reader(filename, target);
                         reader.startread(con);
                     }
-
                 }
             }
             con.close();
