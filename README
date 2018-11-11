@@ -1,1 +1,2 @@
-ПОСЛЕДНИЙ РАЗ ЗАЛИВАЛ ФАЙЛЫ С 31 ОКТЯБРЯ ПО 10 НОЯБРЯ! КОД ИЗМЕНЕН!
+Application reads xls files since X last days.
+Depends on files' names it generates sql and inserts it at our and EISSOI servers in specific tables.

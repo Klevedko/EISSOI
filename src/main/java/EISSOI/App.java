@@ -47,7 +47,7 @@ public class App {
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
             writer.append(cal.getTime().toString());
-            cal.add(Calendar.DATE, -140);
+            cal.add(Calendar.DATE, -2);
             Date dateBefore7Days = cal.getTime();
             final DateTimeFormatter srcFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
             final DateTimeFormatter trgFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
