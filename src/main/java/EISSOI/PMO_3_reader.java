@@ -21,6 +21,16 @@ public class PMO_3_reader extends Reader{
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
             writer.append("---------" + filename + "----------");
+
+            // Удаление из ReportData
+            deleteSql="exec ( 'delete from ReportAnalize_PMO_History_java where file_date = ''" + target + "''')";
+            App.connecting(con, filename, deleteSql);
+
+            // Удаление из EISSOI
+            deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
+            deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
+            App.connecting(con, filename, deleteSqlEissoi);
+
             while (iterator.hasNext()) {
                 sql = "exec(' insert into ReportAnalize_PMO_History_java ([date_insert]\n" +
                         "      ,[RF_part]\n" +
@@ -73,9 +83,9 @@ public class PMO_3_reader extends Reader{
                 sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
-                sqlConn conn = new sqlConn();
-                conn.connecting(con,filename,sql);
-                conn.connecting(con,filename,sqlEISSOI);
+
+                App.connecting(con,filename,sql);
+                App.connecting(con,filename,sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
