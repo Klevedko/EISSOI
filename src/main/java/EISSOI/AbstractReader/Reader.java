@@ -1,8 +1,6 @@
-package EISSOI;
+package EISSOI.AbstractReader;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,7 +23,7 @@ public abstract class Reader {
     public final String filename;
     public final String target;
     public static String  sqlEISSOI="";
-    Reader(String filename, String target){
+    public Reader(String filename, String target){
         this.filename=filename;
         this.target=target;
     }

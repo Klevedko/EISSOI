@@ -1,4 +1,5 @@
-package EISSOI;
+package EISSOI.FileReaders;
+import EISSOI.App;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -7,7 +8,7 @@ import java.net.ConnectException;
 import java.sql.Connection;
 import java.util.Iterator;
 import static EISSOI.App.*;
-public class CHZL7_1_reader extends Reader{
+public class CHZL7_1_reader extends EISSOI.AbstractReader.Reader {
     public CHZL7_1_reader(String fileName,String target) {
         super(fileName,target);
     }

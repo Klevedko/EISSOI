@@ -1,5 +1,7 @@
 package EISSOI;
 
+import EISSOI.FileReaders.*;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -65,7 +67,7 @@ public class App {
                     final LocalDate date = LocalDate.parse(file_data, srcFormatter);
                     final String target = trgFormatter.format(date);
 
-                    Reader reader = null;
+                    EISSOI.AbstractReader.Reader reader = null;
 
                     if (file.getName().toString().substring(0, 3).equals("EMF")) {
                         reader = new EMF_2_reader(filename, target);

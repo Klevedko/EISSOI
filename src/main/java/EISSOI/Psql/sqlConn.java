@@ -1,14 +1,9 @@
-package EISSOI;
-
-import com.sun.org.apache.regexp.internal.RE;
+package EISSOI.Psql;
 
 import java.sql.*;
 import java.lang.String;
-import java.util.logging.Logger;
 
 import static EISSOI.App.writer;
-import static EISSOI.Reader.sql;
-import static EISSOI.Reader.sqlEISSOI;
 
 public class sqlConn {
 

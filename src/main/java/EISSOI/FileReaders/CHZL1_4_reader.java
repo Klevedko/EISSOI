@@ -1,17 +1,18 @@
-package EISSOI;
+package EISSOI.FileReaders;
 
+import EISSOI.App;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.*;
 import java.net.ConnectException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Iterator;
+
 import static EISSOI.App.*;
 
-public class PMO_3_reader extends Reader{
-    public PMO_3_reader (String fileName,String target) {
+public class CHZL1_4_reader extends EISSOI.AbstractReader.Reader {
+    public CHZL1_4_reader(String fileName,String target) {
         super(fileName,target);
     }
     public void startread(Connection con) {
@@ -23,67 +24,58 @@ public class PMO_3_reader extends Reader{
             writer.append("---------" + filename + "----------");
 
             // Удаление из ReportData
-            deleteSql="exec ( 'delete from ReportAnalize_PMO_History_java where file_date = ''" + target + "''')";
+            deleteSql="exec ( 'delete from ReportAnalize_ChZL_dead_history_java where file_date = ''" + target + "''')";
             App.connecting(con, filename, deleteSql);
 
             // Удаление из EISSOI
-            deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
+            deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_ChZL_dead_history_java", "erz_exp.dbo.ReportAnalize_ChZL_dead_history_java");
             deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
             App.connecting(con, filename, deleteSqlEissoi);
 
             while (iterator.hasNext()) {
-                sql = "exec(' insert into ReportAnalize_PMO_History_java ([date_insert]\n" +
+                sql = "exec ('insert into ReportAnalize_ChZL_dead_history_java ([date_insert]\n" +
                         "      ,[RF_part]\n" +
                         "      ,[Code]\n" +
-                        "      ,[count_total_on_date_2]\n" +
-                        "      ,[total_added_on_date_1]\n" +
-                        "      ,[total_added_on_date_2]\n" +
-                        "      ,[added_to_one_clinic_on_date1]\n" +
-                        "      ,[added_to_one_clinic_on_date2]\n" +
-                        "      ,[added_to_one_clinic_on_another_territory_on_date1]\n" +
-                        "      ,[added_to_one_clinic_on_another_territory_on_date2]\n" +
-                        "      ,[added_to_many_clinics_on_date1]\n" +
-                        "      ,[added_to_many_clinics_on_date2]\n" +
-                        "      ,[added_to_many_clinic_on_another_territory_on_date1]\n" +
-                        "      ,[added_to_many_clinic_on_another_territory_on_date2]\n" +
+                        "      ,[count_of_insured_date2]\n" +
+                        "      ,[count_of_dead_on_date1]\n" +
+                        "      ,[count_of_them_in_TFOMS_date1]\n" +
+                        "      ,[count_of_dead_on_date2]\n" +
+                        "      ,[count_of_them_in_TFOMS_date2]\n" +
                         "      ,[Title]\n" +
                         "      ,[date1]\n" +
                         "      ,[date2]\n" +
-                        "      ,[file__name], [file_date] ) select "  + rowInsert;
+                        "      ,[file__name], [file_date]) select " + rowInsert;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 while (cellIterator.hasNext()) {
                     Cell currentCell = cellIterator.next();
                     currentCell.setCellType(Cell.CELL_TYPE_STRING);
                     DataFormatter formatter = new DataFormatter();
-                    if (currentCell.getAddress().toString().equals("D2")) {
+                    if (currentCell.getAddress().toString().equals("C2")) {
                         Title = "''" + formatter.formatCellValue(currentCell) + "''";
                     }
-                    if (currentCell.getAddress().toString().equals("G7")) {
+                    if (currentCell.getAddress().toString().equals("G6")) {
                         date1 = "''" + formatter.formatCellValue(currentCell) + "''";
                     }
-                    if (currentCell.getAddress().toString().equals("F7")) {
+                    if (currentCell.getAddress().toString().equals("F6")) {
                         date2 = "''" + formatter.formatCellValue(currentCell) + "''";
                     }
-                    if (!currentCell.getAddress().toString().substring(0, 1).equals("J")) {
-                        if (currentRow.getRowNum() >= 8) {
-                            if (currentCell.getColumnIndex() > 3) {
-                                sql = sql + (formatter.formatCellValue(currentCell).isEmpty() ? "0" :
-                                        formatter.formatCellValue(currentCell)) + ", ";
-                            }
-                            if (currentCell.getColumnIndex() == 3)
-                                if (formatter.formatCellValue(currentCell).isEmpty()) {
-                                    sql = sql + "''''";
-                                } else {
-                                    sql = sql + "''" + formatter.formatCellValue(currentCell) + "''" + ", ";
-                                }
+                    if (currentRow.getRowNum() >= 7) {
+                        if (currentCell.getColumnIndex() > 3) {
+                            sql = sql + (formatter.formatCellValue(currentCell).isEmpty() ? "0 " :
+                                    formatter.formatCellValue(currentCell)) + ", ";
                         }
+                        if (currentCell.getColumnIndex() == 3)
+                            if (formatter.formatCellValue(currentCell).isEmpty()) {
+                                sql = sql + "''''";
+                            } else {
+                                sql = sql + "''" + formatter.formatCellValue(currentCell) + "''" + ", ";
+                            }
                     }
                 }
                 sql = sql + Title + ", " + date1 + ", " + date2 + ", " + "''" + filename + "'',''" + target + "''')";
-                sqlEISSOI = sql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
+                sqlEISSOI = sql.replaceAll("ReportAnalize_ChZL_dead_history_java", "erz_exp.dbo.ReportAnalize_ChZL_dead_history_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
-
                 App.connecting(con,filename,sql);
                 App.connecting(con,filename,sqlEISSOI);
             }

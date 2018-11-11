@@ -1,5 +1,6 @@
-package EISSOI;
+package EISSOI.FileReaders;
 
+import EISSOI.App;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -10,7 +11,7 @@ import java.util.Iterator;
 
 import static EISSOI.App.*;
 
-public class PolicyTypes_8_reader extends Reader {
+public class PolicyTypes_8_reader extends EISSOI.AbstractReader.Reader {
     public PolicyTypes_8_reader(String fileName,String target) {
         super(fileName,target);
     }
