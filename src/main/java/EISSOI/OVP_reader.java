@@ -74,7 +74,6 @@ public class OVP_reader extends Reader {
                 sql = sql + Title + "," + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_OVP_History_java", "erz_exp.dbo.ReportAnalize_OVP_History_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
-                // передаем соединение и вставляем строку
 
                 App.connecting(con,filename,sql);
                 App.connecting(con,filename,sqlEISSOI);

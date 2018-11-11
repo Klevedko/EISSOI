@@ -25,7 +25,6 @@ public abstract class Reader {
     public final String filename;
     public final String target;
     public static String  sqlEISSOI="";
-    //public Statement st = null;
     Reader(String filename, String target){
         this.filename=filename;
         this.target=target;
