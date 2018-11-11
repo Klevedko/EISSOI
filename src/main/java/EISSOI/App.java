@@ -131,7 +131,6 @@ public class App {
             try {
                 if (!ex.getMessage().toString().equals("The statement did not return a result set.")) {
                     writer.append('\n');
-                    writer.append('\n');
                     writer.append(f);
                     writer.append('\n');
                     writer.append(QUERRRY);
