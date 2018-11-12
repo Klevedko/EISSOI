@@ -1,5 +1,5 @@
 package EISSOI.FileReaders;
-import EISSOI.App;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -7,11 +7,15 @@ import java.io.*;
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.util.Iterator;
+
 import static EISSOI.App.*;
+import static EISSOI.Psql.sqlConn.connecting;
+
 public class CHZL7_1_reader extends EISSOI.AbstractReader.Reader {
-    public CHZL7_1_reader(String fileName,String target) {
-        super(fileName,target);
+    public CHZL7_1_reader(String fileName, String target) {
+        super(fileName, target);
     }
+
     public void startread(Connection con) {
         try {
             InputStream excelFile = new BufferedInputStream(new FileInputStream(new File(filename)));
@@ -21,13 +25,13 @@ public class CHZL7_1_reader extends EISSOI.AbstractReader.Reader {
             writer.append("---------" + filename + "----------");
 
             // Удаление из ReportData
-            deleteSql="exec ( 'delete from ReportEmploymentMonitoringPod_history_java where file_date = ''" + target + "''')";
-            App.connecting(con, filename, deleteSql);
+            deleteSql = "exec ( 'delete from ReportEmploymentMonitoringPod_history_java where file_date = ''" + target + "''')";
+            connecting(con, filename, deleteSql);
 
             // Удаление из EISSOI
             deleteSqlEissoi = deleteSql.replaceAll("ReportEmploymentMonitoringPod_history_java", "erz_exp.dbo.ReportEmploymentMonitoringPod_history_java");
             deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
-            App.connecting(con, filename, deleteSqlEissoi);
+            connecting(con, filename, deleteSqlEissoi);
 
             while (iterator.hasNext()) {
                 sql = "exec(' insert into ReportEmploymentMonitoringPod_history_java ([date_insert]\n" +
@@ -154,12 +158,12 @@ public class CHZL7_1_reader extends EISSOI.AbstractReader.Reader {
                         }
                     }
                 }
-                sql=sql+Title+"," + "''" + filename + "'',''" + target + "''')";
+                sql = sql + Title + "," + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportEmploymentMonitoringPod_history_java", "erz_exp.dbo.ReportEmploymentMonitoringPod_history_java");
-                sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
+                sqlEISSOI = sqlEISSOI + " at [MOS-EISSOI-03]";
 
-                App.connecting(con,filename,sql);
-                App.connecting(con,filename,sqlEISSOI);
+                connecting(con, filename, sql);
+                connecting(con, filename, sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

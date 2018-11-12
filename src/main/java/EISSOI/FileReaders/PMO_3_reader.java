@@ -1,6 +1,5 @@
 package EISSOI.FileReaders;
 
-import EISSOI.App;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -9,6 +8,7 @@ import java.net.ConnectException;
 import java.sql.Connection;
 import java.util.Iterator;
 import static EISSOI.App.*;
+import static EISSOI.Psql.sqlConn.connecting;
 
 public class PMO_3_reader extends EISSOI.AbstractReader.Reader {
     public PMO_3_reader (String fileName,String target) {
@@ -24,12 +24,12 @@ public class PMO_3_reader extends EISSOI.AbstractReader.Reader {
 
             // Удаление из ReportData
             deleteSql="exec ( 'delete from ReportAnalize_PMO_History_java where file_date = ''" + target + "''')";
-            App.connecting(con, filename, deleteSql);
+            connecting(con, filename, deleteSql);
 
             // Удаление из EISSOI
             deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
             deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
-            App.connecting(con, filename, deleteSqlEissoi);
+            connecting(con, filename, deleteSqlEissoi);
 
             while (iterator.hasNext()) {
                 sql = "exec(' insert into ReportAnalize_PMO_History_java ([date_insert]\n" +
@@ -84,8 +84,8 @@ public class PMO_3_reader extends EISSOI.AbstractReader.Reader {
                 sqlEISSOI = sql.replaceAll("ReportAnalize_PMO_History_java", "erz_exp.dbo.ReportAnalize_PMO_History_java");
                 sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
 
-                App.connecting(con,filename,sql);
-                App.connecting(con,filename,sqlEISSOI);
+                connecting(con,filename,sql);
+                connecting(con,filename,sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -1,6 +1,5 @@
 package EISSOI.FileReaders;
 
-import EISSOI.App;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -10,10 +9,11 @@ import java.sql.Connection;
 import java.util.Iterator;
 
 import static EISSOI.App.*;
+import static EISSOI.Psql.sqlConn.connecting;
 
 public class MPNV_6_reader extends EISSOI.AbstractReader.Reader {
-    public MPNV_6_reader(String fileName,String target) {
-        super(fileName,target);
+    public MPNV_6_reader(String fileName, String target) {
+        super(fileName, target);
     }
 
     public void startread(Connection con) {
@@ -25,13 +25,13 @@ public class MPNV_6_reader extends EISSOI.AbstractReader.Reader {
             writer.append("---------" + filename + "----------");
 
             // Удаление из ReportData
-            deleteSql="exec ( 'delete from ReportAnalize_MPNV_History_java where file_date = ''" + target + "''')";
-            App.connecting(con, filename, deleteSql);
+            deleteSql = "exec ( 'delete from ReportAnalize_MPNV_History_java where file_date = ''" + target + "''')";
+            connecting(con, filename, deleteSql);
 
             // Удаление из EISSOI
             deleteSqlEissoi = deleteSql.replaceAll("ReportAnalize_MPNV_History_java", "erz_exp.dbo.ReportAnalize_MPNV_History_java");
             deleteSqlEissoi = deleteSqlEissoi + " at [MOS-EISSOI-03]";
-            App.connecting(con, filename, deleteSqlEissoi);
+            connecting(con, filename, deleteSqlEissoi);
 
             while (iterator.hasNext()) {
                 sql = "exec(' insert into ReportAnalize_MPNV_History_java ([date_insert]\n" +
@@ -83,10 +83,10 @@ public class MPNV_6_reader extends EISSOI.AbstractReader.Reader {
                 }
                 sql = sql + Title + ", " + "''" + filename + "'',''" + target + "''')";
                 sqlEISSOI = sql.replaceAll("ReportAnalize_MPNV_History_java", "erz_exp.dbo.ReportAnalize_MPNV_History_java");
-                sqlEISSOI=sqlEISSOI+ " at [MOS-EISSOI-03]";
+                sqlEISSOI = sqlEISSOI + " at [MOS-EISSOI-03]";
 
-                App.connecting(con,filename,sql);
-                App.connecting(con,filename,sqlEISSOI);
+                connecting(con, filename, sql);
+                connecting(con, filename, sqlEISSOI);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -7,12 +7,12 @@ import static EISSOI.App.writer;
 
 public class sqlConn {
 
-    Statement st = null;
+    public static Statement st = null;
 
-    public void connecting(Connection con, String f, String QUERRRY) {
+    public static void connecting(Connection con, String f, String querrry) {
         try {
             st = con.createStatement();
-            st.executeQuery(QUERRRY);
+            st.executeQuery(querrry);
             st.close();
         } catch (SQLException ex) {
             if (!ex.getMessage().toString().equals("The statement did not return a result set."))
@@ -20,10 +20,9 @@ public class sqlConn {
             try {
                 if (!ex.getMessage().toString().equals("The statement did not return a result set.")) {
                     writer.append('\n');
-                    writer.append('\n');
                     writer.append(f);
                     writer.append('\n');
-                    writer.append(QUERRRY);
+                    writer.append(querrry);
                     writer.append('\n');
                     writer.append(ex.getMessage());
                     writer.append('\n');

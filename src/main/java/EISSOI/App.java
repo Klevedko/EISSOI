@@ -73,17 +73,14 @@ public class App {
                         reader = new EMF_2_reader(filename, target);
                         reader.startread(con);
                     }
-
                     if (file.getName().toString().substring(0, 3).equals("ПВГ")) {
                         reader = new PVG_5_reader(filename, target);
                         reader.startread(con);
                     }
-
                     if (file.getName().toString().substring(0, 5).equals("ЧЗЛ_1")) {
                         reader = new CHZL1_4_reader(filename, target);
                         reader.startread(con);
                     }
-
                     if (file.getName().toString().substring(0, 3).equals("ПМО")) {
                         reader = new PMO_3_reader(filename, target);
                         reader.startread(con);
@@ -92,7 +89,6 @@ public class App {
                         reader = new CHZL7_1_reader(filename, target);
                         reader.startread(con);
                     }
-
                     if (file.getName().toString().substring(0, 4).equals("МПНВ")) {
                         reader = new MPNV_6_reader(filename, target);
                         reader.startread(con);
@@ -101,12 +97,10 @@ public class App {
                         reader = new PolicyTypes_8_reader(filename, target);
                         reader.startread(con);
                     }
-
                     if (file.getName().toString().substring(0, 3).equals("УЭК")) {
                         reader = new UEK_7_reader(filename, target);
                         reader.startread(con);
                     }
-
                     if (file.getName().toString().substring(0, 3).equals("ОВП")) {
                         reader = new OVP_reader(filename, target);
                         reader.startread(con);
@@ -118,31 +112,6 @@ public class App {
                 Exception e) {
             e.getLocalizedMessage();
             System.out.println(e.getMessage());
-        }
-    }
-
-    public static void connecting(Connection con, String f, String QUERRRY) {
-        Statement st = null;
-        try {
-            st = con.createStatement();
-            st.executeQuery(QUERRRY);
-            st.close();
-        } catch (SQLException ex) {
-            if (!ex.getMessage().toString().equals("The statement did not return a result set."))
-                System.out.println(ex.getMessage());
-            try {
-                if (!ex.getMessage().toString().equals("The statement did not return a result set.")) {
-                    writer.append('\n');
-                    writer.append(f);
-                    writer.append('\n');
-                    writer.append(QUERRRY);
-                    writer.append('\n');
-                    writer.append(ex.getMessage());
-                    writer.append('\n');
-                    writer.flush();
-                }
-            } catch (Exception e) {
-            }
         }
     }
 }
