@@ -21,11 +21,11 @@ public class App {
     public static Connection con = null;
 
     // Если собираем проект и тестим на СЕРВЕРЕ то используем URL, PASS, USER такого вида И УБИРАЕМ ЗАВИСИМОСТЬ sourceforge
-//    public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
+    public static String url = "jdbc:sqlserver://10.255.160.75:1433;databaseName=REPORTDATA;integratedSecurity=true";
     // Если собираем проект и тестим на локальной машине I-Novus то используем URL такого вида
-        public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
-        public static String user = "Apatronov";
-        public static String password = "N0vusadm12";
+        //public static String url = "jdbc:jtds:sqlserver://10.255.160.75;databaseName=REPORTDATA;integratedSecurity=true;Domain=GISOMS";
+        //public static String user = "Apatronov";
+        //public static String password = "N0vusadm16";
 
     public static void main(String[] args) {
         try {
@@ -33,9 +33,9 @@ public class App {
             writer = new FileWriter("C:/1/java3.txt", false);
 
             // Если собираем проект и тестим на СЕРВЕРЕ то используем CON такого вида
-            //con = DriverManager.getConnection(url);
+            con = DriverManager.getConnection(url);
             // Если собираем проект и тестим на локальной машине I-Novus то используем CON такого вида и подключаем jtds dependency в pom
-            con = DriverManager.getConnection(url, user, password);
+            //con = DriverManager.getConnection(url, user, password);
 
             File dir = new File("D:/Reports_Outgoing/");
             File[] arrFiles = dir.listFiles();
@@ -47,7 +47,7 @@ public class App {
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
             writer.append(cal.getTime().toString());
-            cal.add(Calendar.DATE, -2);
+            cal.add(Calendar.DATE, -8);
             Date dateBefore7Days = cal.getTime();
             final DateTimeFormatter srcFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
             final DateTimeFormatter trgFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
